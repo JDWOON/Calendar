@@ -96,27 +96,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
+            <ImageButton
                 android:id="@+id/prevBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="이전" />
+                app:srcCompat="@android:drawable/ic_media_previous" />
 
             <TextView
                 android:id="@+id/nowTabText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="con"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="날짜" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/nextBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="다음" />
+                app:srcCompat="@android:drawable/ic_media_next" />
         </LinearLayout>
 
         <LinearLayout

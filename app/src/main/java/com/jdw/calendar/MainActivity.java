@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -29,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private GridView gridView;
     private LinearLayout monthTab, weekTab, dayTab;
     private LinearLayout monthTabLine, weekTabLine, dayTabLine;
-    private Button prevBtn, nextBtn;
+    private ImageButton prevBtn, nextBtn;
     private FloatingActionButton editBtn;
     private TextView nowTabText;
-    public LinearLayout scheduleContent;
+    private LinearLayout scheduleContent;
 
     public SQLiteDatabase db;
     private final String dbName = "CalendarDB";
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         weekTabLine = (LinearLayout) findViewById(R.id.weekTabLine);
         dayTabLine = (LinearLayout) findViewById(R.id.dayTabLine);
 
-        prevBtn = (Button) findViewById(R.id.prevBtn);
-        nextBtn = (Button) findViewById(R.id.nextBtn);
+        prevBtn = (ImageButton) findViewById(R.id.prevBtn);
+        nextBtn = (ImageButton) findViewById(R.id.nextBtn);
 
         // month tab onclick
         monthTab.setOnClickListener(new View.OnClickListener() {
@@ -326,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 cursor.moveToFirst();
                 daySchedule.setText(cursor.getString(0));
             } else {
-                daySchedule.setText("");
+                daySchedule.setText("일정 없음");
             }
             scheduleContent.addView(daySchedule);
 
@@ -422,12 +423,17 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = db.rawQuery("select schedule from calendar where date = " + focusDate, null);
 
+        String dayScheduleString = focusCal.get(Calendar.YEAR) + "년 " +
+                (focusCal.get(Calendar.MONTH) + 1) + "월 " +
+                focusCal.get(Calendar.DATE) + "일\n";
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            daySchedule.setText(cursor.getString(0));
+            dayScheduleString += cursor.getString(0);
         } else {
-            daySchedule.setText("일정 없음");
+            dayScheduleString += "일정 없음";
         }
+
+        daySchedule.setText(dayScheduleString);
 
         scheduleContent.addView(daySchedule);
 
