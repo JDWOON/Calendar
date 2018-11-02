@@ -94,7 +94,7 @@ public class EditActivity extends AppCompatActivity {
     public DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int date) {
-            focusCal.set(year, month + 1, date);
+            focusCal.set(year, month, date);
 
             setEdit();
         }

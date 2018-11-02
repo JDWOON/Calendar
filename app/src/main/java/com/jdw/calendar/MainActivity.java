@@ -1,5 +1,6 @@
 package com.jdw.calendar;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -146,6 +148,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        nowTabText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog dialog = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int date) {
+                                focusCal.set(year, month, date);
+                                if (nowTab == tabs.MONTH) {
+                                    setMonth();
+                                } else if (nowTab == tabs.WEEK) {
+                                    setWeek();
+                                } else if (nowTab == tabs.DAY) {
+                                    setDay();
+                                }
+                            }
+                        },
+                        focusCal.get(Calendar.YEAR), focusCal.get(Calendar.MONTH), focusCal.get(Calendar.DATE));
+
+                dialog.show();
+
+            }
+        });
+
         // init tab is month
         setMonth();
 
@@ -154,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        focusCal = Calendar.getInstance();
 
         if (nowTab == tabs.MONTH) {
             setMonth();
